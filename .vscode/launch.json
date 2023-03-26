@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/hyarl/OneDrive/Documentos/ED - C++",
-      "program": "c:/Users/hyarl/OneDrive/Documentos/ED - C++/build/Debug/outDebug",
+      "cwd": "c:/Users/hyarl/OneDrive/Documentos/ED - C++/Identificandoelementos",
+      "program": "c:/Users/hyarl/OneDrive/Documentos/ED - C++/Identificandoelementos/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

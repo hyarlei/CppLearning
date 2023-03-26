@@ -39,5 +39,6 @@
     "*.ejs": "html",
     "iostream": "cpp",
     "iomanip": "cpp"
-  }
+  },
+  "cmake.configureOnOpen": false
 }
