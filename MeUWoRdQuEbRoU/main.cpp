@@ -17,11 +17,6 @@ int main() {
                 str[i] = tolower(str[i]);
                 break;
             case 'P':
-                // if (i == 0 || (!(str[i - 1] == ' ') && str[i + 1] == ' ')) {
-                //     str[i] = toupper(str[i]);
-                // } else {
-                //     str[i] = tolower(str[i]);
-                // }
                 if(i == 0 && str[i + 1] == ' '){
                     str[i] = tolower(str[0]);
                 } else {
