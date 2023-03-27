@@ -1,17 +1,13 @@
 #include <iostream>
-#include <string>
-#include <cctype>
 
 using namespace std;
 
 int main() {
     string str;
-    string artigos[] = {"e", "o"};
     char format;
     getline(cin, str);
     cin >> format;
 
-    // aplica o formato selecionado
     for (int i = 0; i < str.length(); i++) {
         switch (format) {
             case 'M':
@@ -21,10 +17,24 @@ int main() {
                 str[i] = tolower(str[i]);
                 break;
             case 'P':
-                if ((str[i - 1]== ' ' && str[i] + 1 == ' ') && i != 0 && i != str.length()) {
-                    str[i] = toupper(str[i]);
+                // if (i == 0 || (!(str[i - 1] == ' ') && str[i + 1] == ' ')) {
+                //     str[i] = toupper(str[i]);
+                // } else {
+                //     str[i] = tolower(str[i]);
+                // }
+                if(i == 0 && str[i + 1] == ' '){
+                    str[i] = tolower(str[0]);
                 } else {
-                    str[i] = tolower(str[i]);
+                    if(str[i - 1] == ' ' && str[i + 1] == ' '){
+                        str[i] = tolower(str[i]);
+                    } else {
+                        if (tolower(str[i - 1]) == ' ') {
+                            str[i] = toupper(str[i]);
+                        } else {
+                            str[i] = tolower(str[i]);
+                        }
+                    }
+                    
                 }
                 break;
             case 'i':
