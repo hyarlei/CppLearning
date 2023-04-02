@@ -16,7 +16,7 @@ int main() {
             case 'm':
                 str[i] = tolower(str[i]);
                 break;
-            case 'P':
+            case 'p':
                 if(i == 0 && str[i + 1] == ' '){
                     str[i] = tolower(str[0]);
                 } else {
