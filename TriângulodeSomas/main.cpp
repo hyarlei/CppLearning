@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <limits>
-""
+
 using namespace std;
 
 void printTriangle(vector<int> v) {
