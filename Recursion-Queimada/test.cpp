@@ -2,7 +2,11 @@
 #include <string>
 using namespace std;
 
-void show(string *mat, int nl);
+
+void show(string *mat, int nl) {
+    for(int l = 0; l < nl; l++)
+        cout << mat[l] << "\n";
+}
 
 void tocar_fogo(int nl, int nc, string* mat, int l, int c){
     if (l < 0 || l >= nl || c < 0 || c >= nc || mat[l][c] != '#') {
@@ -27,9 +31,4 @@ int main(){
     tocar_fogo(nl, nc, mat, lfire, cfire);
     show(mat, nl);
     delete[] mat;
-}
-
-void show(string *mat, int nl) {
-    for(int l = 0; l < nl; l++)
-        cout << mat[l] << "\n";
 }
