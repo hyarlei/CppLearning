@@ -26,3 +26,4 @@ int main() {
     cout << fixed << setprecision(6) << euler(n) << endl;
     return 0;
 }
+
