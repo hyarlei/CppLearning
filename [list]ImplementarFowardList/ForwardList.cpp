@@ -157,3 +157,116 @@ void ForwardList::pop_back() {
     delete temp;
     m_size--;
 }
+
+/***********************************************************
+ * Funcoes adicionais - Parte 2
+ ***********************************************************/
+
+void ForwardList::concat(ForwardList& lst) {
+    Node *current = m_head;
+    while(current->next != nullptr) {
+        current = current->next;
+    }
+    current->next = lst.m_head->next;
+    m_size += lst.m_size;
+    lst.m_head->next = nullptr;
+    lst.m_size = 0;
+}
+
+void ForwardList::remove(const Item& val) {
+    Node *current = m_head;
+    while(current->next != nullptr) {
+        if(current->next->value == val) {
+            Node *temp = current->next;
+            current->next = temp->next;
+            delete temp;
+            m_size--;
+        } else {
+            current = current->next;
+        }
+    }
+}
+
+void ForwardList::reverse() {
+    Node *current = m_head->next;
+    Node *prev = nullptr;
+    Node *next = nullptr;
+    while(current != nullptr) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    m_head->next = prev;
+}
+
+ForwardList* ForwardList::clone() {
+    ForwardList *newList = new ForwardList();
+    Node *current = m_head->next;
+    Node *newCurrent = newList->m_head;
+    while(current != nullptr) {
+        newCurrent->next = new Node(current->value, nullptr);
+        current = current->next;
+        newCurrent = newCurrent->next;
+    }
+    newList->m_size = m_size;
+    return newList;
+}
+
+void ForwardList::appendVector(const std::vector<Item>& vec) {
+    Node *current = m_head;
+    while(current->next != nullptr) {
+        current = current->next;
+    }
+    for(int i = 0; i < vec.size(); i++) {
+        Node *newNode = new Node(vec[i], nullptr);
+        current->next = newNode;
+        current = current->next;
+    }
+    m_size += vec.size();
+}
+
+void ForwardList::swap(ForwardList& lst) {
+    Node *tempHead = m_head;
+    int tempSize = m_size;
+    m_head = lst.m_head;
+    m_size = lst.m_size;
+    lst.m_head = tempHead;
+    lst.m_size = tempSize;
+}
+
+bool ForwardList::equals(const ForwardList& lst) const {
+    if(m_size != lst.m_size) {
+        return false;
+    }
+    Node *current = m_head->next;
+    Node *lstCurrent = lst.m_head->next;
+    while(current != nullptr) {
+        if(current->value != lstCurrent->value) {
+            return false;
+        }
+        current = current->next;
+        lstCurrent = lstCurrent->next;
+    }
+    return true;
+}
+
+Item& ForwardList::get(int index) {
+    int count = 0;
+    Node *current = m_head->next;
+    while(count < index) {
+        current = current->next;
+        count++;
+    }
+    return current->value;
+}
+
+const Item& ForwardList::get(int index) const {
+    int count = 0;
+    Node *current = m_head->next;
+    while(count < index) {
+        current = current->next;
+        count++;
+    }
+    return current->value;
+}
