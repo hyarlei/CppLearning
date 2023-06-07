@@ -81,11 +81,13 @@ int main()
             SparseMatriz *m = new SparseMatriz(l, c);
             matrizes.push_back(m);
 
+            limparTela();
             cout << "Matriz " << matrizes.size() - 1 << " criada com sucesso!" << endl;
         }
         // imprime matriz
         else if (tokens[0] == "7")
         {
+            limparTela();
             int k = stoi(tokens[1]);
             matrizes[k]->print();
 
@@ -100,6 +102,7 @@ int main()
             double v = stoi(tokens[4]);
             matrizes[k]->insert(i, j, v);
 
+            limparTela();
             cout << "Valor " << v << " inserido na matriz " << k << " com sucesso!" << endl;
         }
         // ler arquivo
@@ -117,11 +120,13 @@ int main()
             c = c->lerMatrizDeArquivo(arquivo);
             matrizes[k] = c;
 
+            limparTela();
             cout << "Matriz " << k << " lida com sucesso!" << endl;
         }
         // soma matrizes
         else if (tokens[0] == "5")
         {
+            limparTela();
             int p = stoi(tokens[1]);
             int q = stoi(tokens[2]);
             SparseMatriz *C = matrizes[p]->soma(matrizes[p], matrizes[q]);
@@ -139,6 +144,7 @@ int main()
         // multiplica matrizes
         else if (tokens[0] == "6")
         {
+            limparTela();
             int p = stoi(tokens[1]);
             int q = stoi(tokens[2]);
             SparseMatriz *C = multiplica(matrizes[p], matrizes[q]);
@@ -161,16 +167,16 @@ int main()
             double v = matrizes[k]->getValue(i, j);
             cout << "valor: " << v << endl;
 
+            limparTela();
             cout << "Valor " << v << " verificado na matriz " << k << " com sucesso!" << endl;
         }
         else
         {
+            limparTela();
             cout << "comando inexistente" << endl;
         }
 
         cout << endl;
-
-        limparTela();
     }
     return 0;
 }
