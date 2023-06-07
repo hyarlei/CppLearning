@@ -170,6 +170,13 @@ int main()
             limparTela();
             cout << "Valor " << v << " verificado na matriz " << k << " com sucesso!" << endl;
         }
+
+        else if (tokens[0] == "8")
+        {
+            limparTela();
+            cout << "Saindo..." << endl;
+            break;
+        }
         else
         {
             limparTela();
