@@ -2,7 +2,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "MatrizLista.cpp"
+#include <cstdlib>
+#include "matrizlista.h"
 
 using namespace std;
 
@@ -22,162 +23,154 @@ g++ main.cpp matrizfuncoes.cpp -o main
 cria 4 4
 arquivo 0 A.txt */
 
+void limparTela()
+{
+    std::system("clear");
+}
+
+void mostrarMenu()
+{
+    cout << "==== Menu ====" << endl;
+    cout << "1. Criar matriz" << endl;
+    cout << "2. Ler matriz de arquivo" << endl;
+    cout << "3. Inserir valor na matriz" << endl;
+    cout << "4. Verificar valor na matriz" << endl;
+    cout << "5. Somar matrizes" << endl;
+    cout << "6. Multiplicar matrizes" << endl;
+    cout << "7. Imprimir matriz" << endl;
+    cout << "8. Sair" << endl;
+    cout << "Digite o número da opção desejada: ";
+}
+
 int main()
 {
-	vector<SparseMatriz*> matrizes;
+    vector<SparseMatriz *> matrizes;
+    limparTela();
+    while (true)
+    {
 
-	while (true) {
-		string cmd;
-		getline(cin, cmd);
+        mostrarMenu();
 
-		std::stringstream ss{ cmd };
-		vector<string> tokens;
-		string buffer;
+        string cmd;
+        getline(cin, cmd);
 
-		while (ss >> buffer) {
-			tokens.push_back(buffer);
-		}
+        stringstream ss{cmd};
+        vector<string> tokens;
+        string buffer;
 
-		if (tokens.empty()) {
-			cout << "Por favor, insira um comando." << endl;
-			continue;
-		}
+        while (ss >> buffer)
+        {
+            tokens.push_back(buffer);
+        }
 
-		if (tokens[0] == "libera" || tokens[0] == "exit") {
-			for (int i = 0; i < matrizes.size(); ++i) {
-				delete matrizes[i];
-				matrizes[i] = nullptr;
-			}
-			matrizes.clear();
-			break;
-		}
-		// cria matriz.
-		else if (tokens[0] == "cria") {
-			if (tokens.size() < 3) {
-				cout << "Comando 'cria' requer 2 argumentos: cria <linhas> <colunas>" << endl;
-				continue;
-			}
-			int l = std::stoi(tokens[1]);
-			int c = std::stoi(tokens[2]);
-			SparseMatriz* m = new SparseMatriz(l, c);
-			matrizes.push_back(m);
-		}
-		// imprime matriz
-		else if (tokens[0] == "imprime") {
-			if (tokens.size() < 2) {
-				cout << "Comando 'imprime' requer 1 argumento: imprime <numero da matriz>" << endl;
-				continue;
-			}
-			int k = std::stoi(tokens[1]);
-			if (k >= 0 && k < matrizes.size()) {
-				matrizes[k]->print();
-			}
-			else {
-				cout << "Matriz não encontrada." << endl;
-			}
-		}
-		// insere valor na matriz
-		else if (tokens[0] == "insere") {
-			if (tokens.size() < 5) {
-				cout << "Comando 'insere' requer 4 argumentos: insere <numero da matriz> <linha> <coluna> <valor>" << endl;
-				continue;
-			}
-			int k = std::stoi(tokens[1]);
-			if (k >= 0 && k < matrizes.size()) {
-				int i = std::stoi(tokens[2]);
-				int j = std::stoi(tokens[3]);
-				double v = std::stod(tokens[4]);
-				matrizes[k]->insert(i, j, v);
-			}
-			else {
-				cout << "Matriz não encontrada." << endl;
-			}
-		}
-		// ler arquivo
-		else if (tokens[0] == "arquivo") {
-			if (tokens.size() < 3) {
-				cout << "Comando 'arquivo' requer 2 argumentos: arquivo <numero da matriz> <nome do arquivo>" << endl;
-				continue;
-			}
-			int k = std::stoi(tokens[1]);
-			if (k >= 0 && k < matrizes.size()) {
-				std::string arquivo = tokens[2];
-				cout << "Lendo arquivo " << arquivo << endl;
-				SparseMatriz* c = matrizes[k]->lerMatrizDeArquivo(arquivo);
-				if (c != nullptr) {
-					delete matrizes[k];
-					matrizes[k] = c;
-				}
-			}
-			else {
-				cout << "Matriz não encontrada." << endl;
-			}
-		}
-		// soma matrizes
-		else if (tokens[0] == "soma") {
-			if (tokens.size() < 3) {
-				cout << "Comando 'soma' requer 2 argumentos: soma <numero da primeira matriz> <numero da segunda matriz>" << endl;
-				continue;
-			}
-			int p = std::stoi(tokens[1]);
-			int q = std::stoi(tokens[2]);
-			if (p >= 0 && p < matrizes.size() && q >= 0 && q < matrizes.size()) {
-				SparseMatriz* C = matrizes[p]->soma(matrizes[q]);
-				if (C == nullptr) {
-					cout << "Não foi possível somar as matrizes." << endl;
-				}
-				else {
-					C->print();
-					delete C;
-				}
-			}
-			else {
-				cout << "Matriz não encontrada." << endl;
-			}
-		}
-		// multiplica matrizes
-		else if (tokens[0] == "multiplica") {
-			if (tokens.size() < 3) {
-				cout << "Comando 'multiplica' requer 2 argumentos: multiplica <numero da primeira matriz> <numero da segunda matriz>" << endl;
-				continue;
-			}
-			int p = std::stoi(tokens[1]);
-			int q = std::stoi(tokens[2]);
-			if (p >= 0 && p < matrizes.size() && q >= 0 && q < matrizes.size()) {
-				SparseMatriz* C = matrizes[p]->multiplica(matrizes[q]);
-				if (C == nullptr) {
-					cout << "Não foi possível multiplicar as matrizes." << endl;
-				}
-				else {
-					C->print();
-					delete C;
-				}
-			}
-			else {
-				cout << "Matriz não encontrada." << endl;
-			}
-		}
-		// verifica valor na matriz
-		else if (tokens[0] == "valor") {
-			if (tokens.size() < 4) {
-				cout << "Comando 'valor' requer 3 argumentos: valor <numero da matriz> <linha> <coluna>" << endl;
-				continue;
-			}
-			int k = std::stoi(tokens[1]);
-			if (k >= 0 && k < matrizes.size()) {
-				int i = std::stoi(tokens[2]);
-				int j = std::stoi(tokens[3]);
-				double v = matrizes[k]->getValue(i, j);
-				cout << "Valor: " << v << endl;
-			}
-			else {
-				cout << "Matriz não encontrada." << endl;
-			}
-		}
-		else {
-			cout << "Comando inexistente." << endl;
-		}
-	}
+        if (tokens[0] == "libera" || tokens[0] == "exit")
+        {
+            for (int i = 0; i < matrizes.size(); ++i)
+            {
+                delete matrizes[i];
+                matrizes[i] = nullptr;
+            }
+            matrizes.clear();
+            break;
+        }
+        // cria matriz.
+        else if (tokens[0] == "1")
+        {
+            int l = stoi(tokens[1]);
+            int c = stoi(tokens[2]);
+            SparseMatriz *m = new SparseMatriz(l, c);
+            matrizes.push_back(m);
 
-	return 0;
+            cout << "Matriz " << matrizes.size() - 1 << " criada com sucesso!" << endl;
+        }
+        // imprime matriz
+        else if (tokens[0] == "7")
+        {
+            int k = stoi(tokens[1]);
+            matrizes[k]->print();
+
+            cout << "Matriz " << k << " impressa com sucesso!" << endl;
+        }
+        // insere valor na matriz
+        else if (tokens[0] == "3")
+        {
+            int k = stoi(tokens[1]);
+            int i = stoi(tokens[2]);
+            int j = stoi(tokens[3]);
+            double v = stoi(tokens[4]);
+            matrizes[k]->insert(i, j, v);
+
+            cout << "Valor " << v << " inserido na matriz " << k << " com sucesso!" << endl;
+        }
+        // ler arquivo
+        else if (tokens[0] == "2")
+        {
+            int k = stoi(tokens[1]);
+            string arquivo = tokens[2];
+            cout << "Lendo arquivo " << arquivo << endl;
+            SparseMatriz *c;
+            c = c->lerMatrizDeArquivo(arquivo);
+            matrizes[k]->lerMatrizDeArquivo(arquivo);
+            if (matrizes[k] != nullptr)
+                delete matrizes[k];
+
+            c = c->lerMatrizDeArquivo(arquivo);
+            matrizes[k] = c;
+
+            cout << "Matriz " << k << " lida com sucesso!" << endl;
+        }
+        // soma matrizes
+        else if (tokens[0] == "5")
+        {
+            int p = stoi(tokens[1]);
+            int q = stoi(tokens[2]);
+            SparseMatriz *C = matrizes[p]->soma(matrizes[p], matrizes[q]);
+
+            if (C == nullptr)
+                cout << "nao foi possivel somar" << endl;
+            else
+            {
+                C->print();
+                delete C;
+            }
+
+            cout << "Matriz " << p << " somada com a matriz " << q << " com sucesso!" << endl;
+        }
+        // multiplica matrizes
+        else if (tokens[0] == "6")
+        {
+            int p = stoi(tokens[1]);
+            int q = stoi(tokens[2]);
+            SparseMatriz *C = multiplica(matrizes[p], matrizes[q]);
+            if (C == nullptr)
+                cout << "nao foi possivel multiplicar" << endl;
+            else
+            {
+                C->print();
+                delete C;
+            }
+
+            cout << "Matriz " << p << " multiplicada com a matriz " << q << " com sucesso!" << endl;
+        }
+        // verifica valor na matriz
+        else if (tokens[0] == "4")
+        {
+            int k = stoi(tokens[1]);
+            int i = stoi(tokens[2]);
+            int j = stoi(tokens[3]);
+            double v = matrizes[k]->getValue(i, j);
+            cout << "valor: " << v << endl;
+
+            cout << "Valor " << v << " verificado na matriz " << k << " com sucesso!" << endl;
+        }
+        else
+        {
+            cout << "comando inexistente" << endl;
+        }
+
+        cout << endl;
+
+        limparTela();
+    }
+    return 0;
 }

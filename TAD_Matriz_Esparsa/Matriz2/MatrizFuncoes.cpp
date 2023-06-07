@@ -1,39 +1,21 @@
 #include <iostream>
+#include "matrizlista.h"
 #include <fstream>
 
-struct Node {
-    Node* direita;
-    Node* abaixo;
+using namespace std;
+
+struct Node
+{
+    Node *direita;
+    Node *abaixo;
     int linha;
     int coluna;
     double valor;
 };
 
-class SparseMatriz {
-private:
-    Node* head;
-    Node* lin;
-    Node* col;
-    int mlinha;
-    int mcoluna;
-
-    void createHead(int m, int n);
-
-public:
-    SparseMatriz(int m, int n);
-    ~SparseMatriz();
-
-    void insert(int i, int j, double value);
-    double getValue(int i, int j);
-    int getColuna();
-    int getLinha();
-    void print();
-    SparseMatriz* soma(SparseMatriz* A, SparseMatriz* B);
-    SparseMatriz* multiplica(SparseMatriz* A, SparseMatriz* B);
-    SparseMatriz* lerMatrizDeArquivo(std::string nomeDoArquivo);
-};
-
-SparseMatriz::SparseMatriz(int m, int n) {
+SparseMatriz::SparseMatriz(int m, int n)
+{
+    // Iniciando o nó cabeca
     head = new Node;
     head->valor = 9999;
     head->linha = -1;
@@ -44,17 +26,21 @@ SparseMatriz::SparseMatriz(int m, int n) {
     createHead(m, n);
 }
 
-SparseMatriz::~SparseMatriz() {
-    Node* atual;
+SparseMatriz::~SparseMatriz()
+{
+    // Apagando a matriz
+    Node *atual;
 
     lin = head->abaixo;
     col = head->direita;
 
-    while (lin != head) {
+    while (lin != head)
+    {
         atual = lin->direita;
 
-        while (atual->linha != -1) {
-            Node* prev = atual;
+        while (atual->linha != -1)
+        {
+            Node *prev = atual;
             atual = atual->direita;
             delete prev;
             lin->direita = atual;
@@ -65,46 +51,56 @@ SparseMatriz::~SparseMatriz() {
 
     lin = head->abaixo;
 
-    while (lin != head || col != head) {
-        if (lin != head) {
-            Node* prev = lin;
+    while (lin != head || col != head)
+    {
+        if (lin != head)
+        {
+            Node *prev = lin;
             lin = lin->abaixo;
             delete prev;
         }
 
-        if (col != head) {
-            Node* prev = col;
+        if (col != head)
+        {
+            Node *prev = col;
             col = col->direita;
             delete prev;
         }
     }
-
     delete head;
+
     std::cout << "Matriz apagada" << std::endl;
 }
 
-void SparseMatriz::createHead(int m, int n) {
+void SparseMatriz::createHead(int m, int n)
+{
+    // Guardando o tamanho da matriz
     mlinha = m;
     mcoluna = n;
 
     col = head;
 
-    Node* novo;
+    Node *novo;
 
-    for (int i = 1; i <= mcoluna; i++) {
+    // Crindo os nós cabeças para coluna
+    for (int i = 1; i <= mcoluna; i++)
+    {
         novo = new Node;
+
         col->direita = novo;
         novo->valor = 9999;
-        novo->linha = i;
+        novo->linha = i; // Guardar o indice da coluna
         novo->coluna = -1;
-        novo->abaixo = novo;
+        novo->abaixo = novo; // Circularidade
         col = col->direita;
     }
-
+    // ajustar a circularidade
     col->direita = head;
 
+    // Crindo os nós cabeças para linha
     lin = head;
-    for (int i = 1; i <= mlinha; i++) {
+    for (int i = 1; i <= mlinha; i++)
+    {
         novo = new Node;
         lin->abaixo = novo;
         novo->valor = 9999;
@@ -115,36 +111,50 @@ void SparseMatriz::createHead(int m, int n) {
     lin->abaixo = head;
 }
 
-void SparseMatriz::insert(int i, int j, double value) {
+// função para inserir valor na matriz
+void SparseMatriz::insert(int i, int j, double value)
+{
+    // Verificar se os indices de linha e coluna
+    // passados como parametro são válidos
     if (i < 1 || i > mlinha || j < 1 || j > mcoluna)
         return;
 
-    Node* prev = nullptr;
-    Node* atual;
+    /* Buscar: Verificar se ja existe um elemeto na posição */
+    Node *prev = nullptr;
+    Node *atual;
 
     lin = col = head;
 
+    // Mover o ponteiro pelo no da coluna até a posição desejada
     for (int ind = 1; ind <= j; ind++)
         col = col->direita;
 
+    // Mover o ponteiro pelo no da linha até a posição desejada
     for (int ind = 1; ind <= i; ind++)
         lin = lin->abaixo;
 
     atual = lin;
 
+    // Meu atual recebe o primeiro elemento da linha
     prev = atual;
     atual = atual->direita;
 
-    while (atual->coluna < j && atual->linha != -1) {
+    // Mover o ponteiro pelo no da linha até a posição desejada
+    while (atual->coluna < j && atual->linha != -1)
+    {
         prev = atual;
         atual = atual->direita;
     }
 
-    if (atual != lin && atual->coluna == j && atual->linha == i) {
-        if (value == 0) {
+    /* Atribuir valor: Se o no existir*/
+    if (atual != lin && atual->coluna == j && atual->linha == i)
+    {
+        if (value == 0)
+        {
             if (prev == lin)
                 lin->direita = atual->direita;
-            else {
+            else
+            {
                 prev->direita = atual->direita;
                 col->abaixo = atual->abaixo;
             }
@@ -153,8 +163,9 @@ void SparseMatriz::insert(int i, int j, double value) {
         else
             atual->valor = value;
     }
-    else {
-        Node* novo = new Node;
+    else
+    {
+        Node *novo = new Node;
         novo->linha = i;
         novo->coluna = j;
         novo->valor = value;
@@ -167,7 +178,10 @@ void SparseMatriz::insert(int i, int j, double value) {
     }
 }
 
-double SparseMatriz::getValue(int i, int j) {
+double SparseMatriz::getValue(int i, int j)
+{
+    // Verificar se os indices de linha e coluna
+    // passados como parametro são válidos
     if (i < 1 || i > mlinha || j < 1 || j > mcoluna)
         return 0;
 
@@ -176,9 +190,11 @@ double SparseMatriz::getValue(int i, int j) {
     for (int ind = 1; ind < i; ind++)
         lin = lin->abaixo;
 
-    Node* atual = lin->direita;
+    Node *atual = lin->direita;
 
-    while (atual->linha != -1) {
+    while (atual->linha != -1)
+    {
+
         if (atual->coluna == j && atual->linha == i)
             return atual->valor;
         else
@@ -187,28 +203,36 @@ double SparseMatriz::getValue(int i, int j) {
     return 0;
 }
 
-int SparseMatriz::getColuna() {
+int SparseMatriz::getColuna()
+{
     return mcoluna;
 }
 
-int SparseMatriz::getLinha() {
+int SparseMatriz::getLinha()
+{
     return mlinha;
 }
+// função para printar matriz
+void SparseMatriz::print()
+{
+    Node *linha = head->abaixo;
+    Node *atual = nullptr;
 
-void SparseMatriz::print() {
-    Node* linha = head->abaixo;
-    Node* atual = nullptr;
-
-    for (int i = 1; i <= mlinha; i++) {
+    for (int i = 1; i <= mlinha; i++)
+    {
         atual = linha->direita;
 
-        for (int j = 1; j <= mcoluna; j++) {
-            if (atual->linha == i && atual->coluna == j) {
+        for (int j = 1; j <= mcoluna; j++)
+        {
+
+            if (atual->linha == i && atual->coluna == j)
+            {
                 std::cout << atual->valor << " ";
                 atual = atual->direita;
             }
             else
-                std::cout << "0" << " ";
+                std::cout << "0"
+                          << " ";
 
             if (linha->direita->linha == -1 || linha->direita->linha == i)
                 linha = linha->abaixo;
@@ -216,13 +240,19 @@ void SparseMatriz::print() {
         std::cout << std::endl;
     }
 }
+// função para somar matrizes
+SparseMatriz *SparseMatriz::soma(SparseMatriz *A, SparseMatriz *B)
+{
 
-SparseMatriz* SparseMatriz::soma(SparseMatriz* A, SparseMatriz* B) {
-    if (A->mlinha == B->mlinha && A->mcoluna == B->mcoluna) {
-        SparseMatriz* C = new SparseMatriz(A->mlinha, A->mcoluna);
+    if (A->mlinha == B->mlinha && A->mcoluna == B->mcoluna)
+    {
+        // Cria uma nova matriz para retornar
+        SparseMatriz *C = new SparseMatriz(A->mlinha, A->mcoluna);
 
-        for (int i = 1; i <= A->mlinha; i++) {
-            for (int j = 1; j <= A->mcoluna; j++) {
+        for (int i = 1; i <= A->mlinha; i++)
+        {
+            for (int j = 1; j <= A->mcoluna; j++)
+            {
                 C->insert(i, j, (A->getValue(i, j) + B->getValue(i, j)));
             }
         }
@@ -231,36 +261,46 @@ SparseMatriz* SparseMatriz::soma(SparseMatriz* A, SparseMatriz* B) {
 
     return nullptr;
 }
-
-SparseMatriz* multiplica(SparseMatriz* A, SparseMatriz* B) {
+// função para multiplicar matrizes.
+SparseMatriz *multiplica(SparseMatriz *A, SparseMatriz *B)
+{
     if (A->getColuna() != B->getLinha())
         return nullptr;
 
-    SparseMatriz* C = new SparseMatriz(A->getLinha(), B->getColuna());
+    SparseMatriz *C = new SparseMatriz(A->getLinha(), B->getColuna());
 
-    for (int i = 1; i <= A->getLinha(); i++) {
-        for (int j = 1; j <= B->getColuna(); j++) {
-            for (int k = 1; k <= A->getColuna(); k++) {
+    for (int i = 1; i <= A->getLinha(); i++)
+    {
+        for (int j = 1; j <= B->getColuna(); j++)
+        {
+            for (int k = 1; k <= A->getColuna(); k++)
+            {
                 C->insert(i, j, (C->getValue(i, j) + (A->getValue(i, k) * B->getValue(k, j))));
             }
         }
     }
     return C;
 }
-
-SparseMatriz* SparseMatriz::lerMatrizDeArquivo(std::string nomeDoArquivo) {
+// lê matriz do arquivo.
+SparseMatriz *SparseMatriz::lerMatrizDeArquivo(std::string nomeDoArquivo)
+{
     std::ifstream txtFile;
     int lin, col;
     double value;
 
+    // Abrindo o arquivo
     txtFile.open(nomeDoArquivo);
 
+    // Le o tamanho da matriz no arquivo
     txtFile >> lin >> col;
-    SparseMatriz* c = new SparseMatriz(lin, col);
+    // c->createHead(lin, col);
+    SparseMatriz *c = new SparseMatriz(lin, col);
 
     int i, j;
-    for (int cont = 1; cont <= lin; cont++) {
-        for (int cont2 = 1; cont2 <= col; cont2++) {
+    for (int cont = 1; cont <= lin; cont++)
+    {
+        for (int cont2 = 1; cont2 <= col; cont2++)
+        {
             txtFile >> i >> j >> value;
             c->insert(i, j, value);
         }
