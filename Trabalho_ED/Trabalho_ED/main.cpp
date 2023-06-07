@@ -9,19 +9,12 @@ using namespace std;
 
 /* comandos:
 
-criar matriz: cria n n (cria matriz com n linhas e n colunas)
-ler arquivo: arquivo n (numero da matriz a ser preenchida) A.txt (nome do arquivo e extenção) Ex: arquivo 0 A.txt
-inserir valor na matriz: insere n (numero da matriz) n (linha) n (coluna) n (valor) Ex: insere 0 1 1 99
-checar valor da matriz: valor n (numero da matriz) n (linha) n (coluna) Ex: valor 0 1 1
-somar matrizes: soma n (numero da primeira matris) n (numero da segunda matris) Ex: soma 0 1
-multiplicar matrizes: multiplica n (numero da primeira matris) n (numero da segunda matris) Ex: multiplica 0 1
-
 obs: para preencher matriz através do arquivo é necessário que a matriz já tenha sido criada
 Ex:
 g++ main.cpp matrizfuncoes.cpp -o main
 ./main
-cria 4 4
-arquivo 0 A.txt */
+Para criar - Ex: 1 4 4
+Ler arquivo - Ex: 2 0 A.txt */
 
 void limparTela()
 {
@@ -30,16 +23,18 @@ void limparTela()
 
 void mostrarMenu()
 {
-    cout << "==== Menu ====" << endl;
-    cout << "1. Criar matriz" << endl;
-    cout << "2. Ler matriz de arquivo" << endl;
-    cout << "3. Inserir valor na matriz" << endl;
-    cout << "4. Verificar valor na matriz" << endl;
-    cout << "5. Somar matrizes" << endl;
-    cout << "6. Multiplicar matrizes" << endl;
-    cout << "7. Imprimir matriz" << endl;
-    cout << "8. Sair" << endl;
-    cout << "Digite o número da opção desejada: ";
+    cout << "======================================================== Menu ===================================================================" << endl;
+    cout << "|   1. Criar matriz - (Informar tamanho da matriz - Ex: 1 4 4)                                                                  |" << endl;
+    cout << "|   2. Ler matriz de arquivo - (Número da matriz a ser preenchida e o nome do arquivo e extensão - Ex: 2 0 matriz1.txt)           |" << endl;
+    cout << "|   3. Inserir valor na matriz - (Número da matriz) n (Número da linha) n (Número da coluna) n (Valor) Ex: 0 1 1 99             |" << endl;
+    cout << "|   4. Verificar valor na matriz - (Número da matriz) n (linha) n (coluna) Ex: 4 0 1 1                                          |" << endl;
+    cout << "|   5. Somar matrizes - (Número da primeira matriz) n (Número da segunda matriz) Ex: 5 0 1                                      |" << endl;
+    cout << "|   6. Multiplicar matrizes - (Número da primeira matriz) n (Número da segunda matriz) Ex: 6 0 1                                |" << endl;
+    cout << "|   7. Imprimir matriz - (Número da matriz) Ex: 7 0                                                                             |" << endl;
+    cout << "|   8. Sair                                                                                                                     |" << endl;
+    cout << "=================================================================================================================================" << endl;
+
+    cout << "Digite o número da opção desejada e mais as informações que você deseja: ";
 }
 
 int main()
