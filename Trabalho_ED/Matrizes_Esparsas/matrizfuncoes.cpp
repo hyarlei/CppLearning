@@ -15,7 +15,7 @@ struct Node
 
 SparseMatriz::SparseMatriz(int m, int n)
 {
-    // Iniciando o nó cabeca
+    // Iniciando o nó cabeça
     head = new Node;
     head->valor = 9999;
     head->linha = -1;
@@ -94,7 +94,7 @@ void SparseMatriz::createHead(int m, int n)
         novo->abaixo = novo; // Circularidade
         col = col->direita;
     }
-    // ajustar a circularidade
+    // Ajustar a circularidade
     col->direita = head;
 
     // Crindo os nós cabeças para linha
@@ -111,11 +111,11 @@ void SparseMatriz::createHead(int m, int n)
     lin->abaixo = head;
 }
 
-// função para inserir valor na matriz
+// Função para inserir valor na matriz
 void SparseMatriz::insert(int i, int j, double value)
 {
-    // Verificar se os indices de linha e coluna
-    // passados como parametro são válidos
+    // Verificar se os índices de linha e coluna
+    // Passados como parametro são válidos
     if (i < 1 || i > mlinha || j < 1 || j > mcoluna)
         return;
 
@@ -146,7 +146,7 @@ void SparseMatriz::insert(int i, int j, double value)
         atual = atual->direita;
     }
 
-    /* Atribuir valor: Se o no existir*/
+    // Atribuir valor: Se o no existir
     if (atual != lin && atual->coluna == j && atual->linha == i)
     {
         if (value == 0)
@@ -180,8 +180,7 @@ void SparseMatriz::insert(int i, int j, double value)
 
 double SparseMatriz::getValue(int i, int j)
 {
-    // Verificar se os indices de linha e coluna
-    // passados como parametro são válidos
+    // Verificar se os indices de linha e coluna passados como parametro são válidos
     if (i < 1 || i > mlinha || j < 1 || j > mcoluna)
         return 0;
 
@@ -205,16 +204,19 @@ double SparseMatriz::getValue(int i, int j)
 
 int SparseMatriz::getColuna()
 {
+    // Retorna o numero de colunas da matriz
     return mcoluna;
 }
 
 int SparseMatriz::getLinha()
 {
+    // Retorna o numero de linhas da matriz
     return mlinha;
 }
-// função para printar matriz
+// Função para printar matriz
 void SparseMatriz::print()
 {
+    // Retorna o numero
     Node *linha = head->abaixo;
     Node *atual = nullptr;
 
@@ -240,7 +242,7 @@ void SparseMatriz::print()
         std::cout << std::endl;
     }
 }
-// função para somar matrizes
+// Função para somar matrizes
 SparseMatriz *SparseMatriz::soma(SparseMatriz *A, SparseMatriz *B)
 {
 
@@ -261,7 +263,7 @@ SparseMatriz *SparseMatriz::soma(SparseMatriz *A, SparseMatriz *B)
 
     return nullptr;
 }
-// função para multiplicar matrizes.
+// Função para multiplicar matrizes.
 SparseMatriz *multiplica(SparseMatriz *A, SparseMatriz *B)
 {
     if (A->getColuna() != B->getLinha())
@@ -281,7 +283,7 @@ SparseMatriz *multiplica(SparseMatriz *A, SparseMatriz *B)
     }
     return C;
 }
-// lê matriz do arquivo.
+// Lê matriz do arquivo.
 SparseMatriz *SparseMatriz::lerMatrizDeArquivo(std::string nomeDoArquivo)
 {
     std::ifstream txtFile;
@@ -291,9 +293,8 @@ SparseMatriz *SparseMatriz::lerMatrizDeArquivo(std::string nomeDoArquivo)
     // Abrindo o arquivo
     txtFile.open(nomeDoArquivo);
 
-    // Le o tamanho da matriz no arquivo
+    // Lê o tamanho da matriz no arquivo
     txtFile >> lin >> col;
-    // c->createHead(lin, col);
     SparseMatriz *c = new SparseMatriz(lin, col);
 
     int i, j;

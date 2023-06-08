@@ -12,42 +12,40 @@ private:
     int mlinha, mcoluna;
 
 public:
-    /*Inicializa uma matriz esparsa vazia com
-    capacidade para m linhas e n colunas.*/
+    // Inicializa uma matriz esparsa vazia com capacidade para m linhas e n colunas.
     SparseMatriz(int m, int n);
 
-    /*Destrutor que libera toda a memoria que foi alocada
-    dinamicamente para esta estrutura de dados.*/
+    //Destrutor que libera toda a memoria que foi alocada dinamicamente para esta estrutura de dados.
     ~SparseMatriz();
 
-    /*Inicializa os no cabeça das linha e das colunas*/
+    // Inicializa os no cabeça das linha e das colunas
     void createHead(int m, int n);
 
-    /*Insere um valor na célula (i, j) da matriz,
-    onde i é a linha e j é a coluna.*/
+    // Insere um valor na célula (i, j) da matriz, onde i é a linha e j é a coluna.
     void insert(int i, int j, double value);
 
-    /*Devolve o valor na célula (i, j) da matriz,
-    onde i é a linha e j é a coluna.*/
+    // Devolve o valor na célula (i, j) da matriz, onde i é a linha e j é a coluna.
     double getValue(int i, int j);
 
-    /* Quantidade de Colunas*/
+    // Quantidade de Colunas (j).
     int getColuna();
 
-    /*Quantida de Linhas*/
+    // Quantida de Linhas (i).
     int getLinha();
 
-    /*Esse método imprime a matriz */
+    // Esse método imprime a matriz esparsa na tela.
     void print();
 
+    // Esse método mostra o menu para o usuário.
     void mostrarMenu();
 
-    /*Soma duas matrizes(A,B) e o resultando sai numa terceira matriz(C) q logo depois é excluida*/
+    // Soma duas matrizes(A,B) e o resultando sai numa terceira matriz(C) q logo depois é excluida.
     SparseMatriz *soma(SparseMatriz *A, SparseMatriz *B);
 
+    // Multiplica duas matrizes(A,B) e o resultando sai numa terceira matriz(C) que logo depois é excluida.
     SparseMatriz *lerMatrizDeArquivo(std::string nomeDoArquivo);
 };
-/*Multiplica duas matrizes(A,B) e o resultando sai numa terceira matriz(C) que logo depois é excluida*/
+// Multiplica duas matrizes(A,B) e o resultando sai numa terceira matriz(C) que logo depois é excluida.
 SparseMatriz *multiplica(SparseMatriz *A, SparseMatriz *B);
 
 #endif

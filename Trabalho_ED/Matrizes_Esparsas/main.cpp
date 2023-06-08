@@ -7,14 +7,14 @@
 
 using namespace std;
 
-/* comandos:
+/*
+comandos:
 
-Para preencher a Matriz através do arquivo é necessário que a matriz já tenha sido criada
+Para executar o programa, digite isso no terminal:
 Ex:
 g++ main.cpp matrizfuncoes.cpp -o main
 ./main
-Para criar -> Ex: 1 4 4
-Ler arquivo -> Ex: 2 0 matriz1.txt */
+*/
 
 void limparTela()
 {
@@ -70,7 +70,7 @@ int main()
             cout << "Matriz " << matrizes.size() - 1 << " criada com sucesso!" << endl;
         }
 
-        // Ler arquivo
+        // Ler o arquivo
         else if (tokens[0] == "2")
         {
             int k = stoi(tokens[1]);
