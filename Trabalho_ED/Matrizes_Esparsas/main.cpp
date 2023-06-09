@@ -8,6 +8,11 @@
 using namespace std;
 
 /*
+
+Nomes:
+Hyarlei Silva Freitas - 542646
+Elixandre da Silveira Silva Filho - 478164
+
 comandos:
 
 Para executar o programa, digite isso no terminal:
