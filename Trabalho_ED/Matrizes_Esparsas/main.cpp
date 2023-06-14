@@ -13,7 +13,7 @@ Nomes:
 Hyarlei Silva Freitas - 542646
 Elixandre da Silveira Silva Filho - 478164
 
-comandos:
+Comandos:
 
 Para executar o programa, digite isso no terminal:
 Ex:
@@ -28,16 +28,16 @@ void limparTela()
 
 void mostrarMenu()
 {
-    cout << "======================================================== Menu ===================================================================" << endl;
-    cout << "|   1. Criar matriz - (Informar tamanho da matriz - Ex: 1 4 4)                                                                  |" << endl;
-    cout << "|   2. Ler matriz de arquivo - (Número da matriz a ser preenchida e o nome do arquivo e extensão - Ex: 2 0 matriz1.txt)         |" << endl;
-    cout << "|   3. Inserir valor na matriz - (Número da matriz) n (Número da linha) n (Número da coluna) n (Valor) Ex: 0 1 1 99             |" << endl;
-    cout << "|   4. Verificar valor na matriz - (Número da matriz) n (linha) n (coluna) Ex: 4 0 1 1                                          |" << endl;
-    cout << "|   5. Somar matrizes - (Número da primeira matriz) n (Número da segunda matriz) Ex: 5 0 1                                      |" << endl;
-    cout << "|   6. Multiplicar matrizes - (Número da primeira matriz) n (Número da segunda matriz) Ex: 6 0 1                                |" << endl;
-    cout << "|   7. Imprimir matriz - (Número da matriz) Ex: 7 0                                                                             |" << endl;
-    cout << "|   8. Sair                                                                                                                     |" << endl;
-    cout << "=================================================================================================================================" << endl;
+    cout << "======================================================== Menu =====================================================================" << endl;
+    cout << "|   1. Criar matriz - (Informar tamanho da matriz - Ex: 1 4 4)                                                                    |" << endl;
+    cout << "|   2. Ler matriz de arquivo - (Número da matriz a ser preenchida e o nome do arquivo e extensão - Ex: 2 0 matriz1.txt)           |" << endl;
+    cout << "|   3. Inserir valor na matriz - (Número da matriz) n (Número da linha) n (Número da coluna) n (Valor) Ex: 3 0 1 1 99             |" << endl;
+    cout << "|   4. Verificar valor na matriz - (Número da matriz) n (linha) n (coluna) Ex: 4 0 1 1                                            |" << endl;
+    cout << "|   5. Somar matrizes - (Número da primeira matriz) n (Número da segunda matriz) Ex: 5 0 1                                        |" << endl;
+    cout << "|   6. Multiplicar matrizes - (Número da primeira matriz) n (Número da segunda matriz) Ex: 6 0 1                                  |" << endl;
+    cout << "|   7. Imprimir matriz - (Número da matriz) Ex: 7 0                                                                               |" << endl;
+    cout << "|   8. Sair                                                                                                                       |" << endl;
+    cout << "===================================================================================================================================" << endl;
 
     cout << "Digite o número da opção desejada e mais as informações que você deseja: ";
 }
