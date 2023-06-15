@@ -4,8 +4,6 @@
 
 /*
 
-Nome: Caio Yuri Cavalcante Soares Ferreira
-
 Comandos:
 
 Para executar o programa, digite isso no terminal:
